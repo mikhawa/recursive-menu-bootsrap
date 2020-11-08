@@ -14,7 +14,7 @@ function createMenu(int $parent, int $level, array $rubriques){
 
     foreach($rubriques as $node){
         if($parent==$node['rubriques_idrubriques']){
-            if($prevLevel<$level) $out.="\n<ul>\n";.
+            if($prevLevel<$level) $out.="\n<ul>\n";
             $out .="    <li><a href='?id={$node['idrubriques']}'>".$node['rubriques_name']."</a></li>";
             $prevLevel=$level;
             $out .= createMenu($node['idrubriques'],($level+1),$rubriques);
