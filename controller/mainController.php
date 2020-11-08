@@ -4,4 +4,4 @@ require_once "../model/rubriquesModel.php";
 
 $recupRubriques = selectAllRubriques($db);
 
-var_dump($recupRubriques);
+echo createMenu(0,0,$recupRubriques);
