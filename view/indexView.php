@@ -47,7 +47,8 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
 
         <?=$menu?>
-
+<hr>
+        <?=$menuCSS?>
         <!--
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
