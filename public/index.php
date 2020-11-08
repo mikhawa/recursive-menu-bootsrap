@@ -10,4 +10,4 @@ require_once "../model/connectMysqliModel.php";
 $db = connectMysqliModel();
 
 // controller
-require_once "../controller/publicController.php";
+require_once "../controller/mainController.php";
