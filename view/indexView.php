@@ -45,8 +45,8 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-
-        <?=$menuCSS?>
+        <ul class='navbar-nav mr-auto'>
+        <li class="nav-item"> <a class="nav-link"  href="./">Accueil</a> </li>
 
         <?=$menuBootstrap?>
         <!--

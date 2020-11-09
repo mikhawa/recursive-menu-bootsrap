@@ -71,26 +71,39 @@ function createMenuBootstrap(int $parent, int $level, array $rubriques)
     $prevLevel = 0;
 
     // premier passage
-    if (!$level && !$prevLevel) $out .= "\n<ul>\n";
+    if (!$level && !$prevLevel) $out .= "\n\n";
 
     // listage de chaques rubriques
     foreach ($rubriques as $node) {
+
         // si on est enfant d'une autre rubrique (ou au moins de l'accueil: 0)
         if ($parent == $node['rubriques_idrubriques']) {
-            // et qu'on est le premier enfant on ajoute un ul
-            if ($prevLevel < $level) $out .= "\n<ul>\n";
-            // quelque soit le niveau on ajoute le li et le lien vers la rubrique + nom
-            $out .= "    <li><a href='?id={$node['idrubriques']}'>" . $node['rubriques_name'] . "</a>";
+
+            // si on est un parent
+            if ($level == $parent) {
+
+                $out .= '<li class="nav-item dropdown">' . "\n<a class='nav-link dropdown-toggle' href='?id={$node['idrubriques']}' id='dropdown{$node['idrubriques']}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" . $node['rubriques_name'] . "</a>\n".'<div class="dropdown-menu" aria-labelledby="dropdown' . $node['idrubriques'] . '">';
+
+
+             // si on est le premier enfant on ajoute un ul
+        }elseif ($prevLevel < $level) {
+                $out .= "    <a class='dropdown-item' href='?id={$node['idrubriques']}'>{$node['rubriques_name']}</a>";
+                // quelque soit le niveau on ajoute le li et le lien vers la rubrique + nom
+            }else {
+                $out .= "<a class='dropdown-item' href='?id={$node['idrubriques']}'>" . $node['rubriques_name'] . "</a>";
+            }
             // si on n'est pas sur un parent, on ajoute le </li>
-            if ($level != $parent) $out .= "</li>";
+            if ($level == $parent) $out .= "";
+            if ($level > $parent) $out .= "</div>";
             // on met le level précédant à jour
             $prevLevel = $level;
             // on va chercher les sous-menus de la rubrique actuelle (! $out devient une sorte de 'globale', et ne sera donc pas effacée par l'initialisation : $out se remplit avec l'$out de l'initialisation et n'est donc pas vidée!), c'est notre récursivité de la fonction
             $out .= createMenuBootstrap($node['idrubriques'], ($level + 1), $rubriques);
         }
     }
+
     // si il n'y a plus de rubriques enfant de l'actuelle, on ferme le ul et li du parent
-    if (($prevLevel == $level) && ($prevLevel != 0)) $out .= "\n</ul>\n</li>\n\n";
+    if (($prevLevel == $level) && ($prevLevel != 0)) $out .= "\n</div>\n</li>\n\n";
     // sinon si on est sur la dernière rubrique
     elseif ($prevLevel == $level) $out .= "</li>\n  </ul>\n";
 
